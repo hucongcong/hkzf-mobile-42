@@ -19,10 +19,22 @@ const itemList = [
 class Home extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
+    // console.log(props)
     this.state = {
       // 设置默认高亮
       selectedTab: props.location.pathname
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // console.log(prevProps)
+    // console.log(this.props)
+    // console.log('home组件发生了更新')
+    // 更新阶段不能直接调用setState的，需要有条件
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        selectedTab: this.props.location.pathname
+      })
     }
   }
 
@@ -35,9 +47,6 @@ class Home extends React.Component {
         selectedIcon={<i className={`iconfont ${item.icon}`} />}
         selected={this.state.selectedTab === item.path}
         onPress={() => {
-          this.setState({
-            selectedTab: item.path
-          })
           this.props.history.push(item.path)
         }}
       />
@@ -60,7 +69,7 @@ class Home extends React.Component {
           删除renderContent的函数以及这个函数的调用
           调整了样式，把tabBar放到最底部
         */}
-        <div className="nav">
+        <div className="tabBar">
           <TabBar
             unselectedTintColor="#888"
             tintColor="#21b97a"

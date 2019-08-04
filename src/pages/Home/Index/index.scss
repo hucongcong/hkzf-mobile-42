@@ -1,0 +1,142 @@
+.index {
+  .swiper {
+    position: relative;
+    .search-box {
+      padding: 0 10px;
+      position: absolute;
+      top: 25px;
+      z-index: 1;
+      width: 100%;
+      overflow: hidden;
+
+      .search-form {
+        flex: 1;
+        margin: 0 10px;
+        padding: 5px;
+        border-radius: 3px;
+        background-color: #fff;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .location {
+          .icon-arrow {
+            margin-left: 2px;
+            font-size: 12px;
+            color: #7f7f80;
+          }
+        }
+        .search-input {
+          border-left: solid 1px #787d82;
+          margin-left: 5px;
+          .icon-seach {
+            vertical-align: middle;
+            padding: 0 5px;
+          }
+          span {
+            font-size: 12px;
+            color: #787d82;
+          }
+        }
+      }
+      .icon-map {
+        font-size: 28px;
+        color: #fff;
+      }
+    }
+  }
+
+  .nav {
+    padding: 10px 0;
+    .am-flexbox {
+      text-align: center;
+    }
+    img {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 7px;
+    }
+  }
+  .group {
+    background-color: #eee;
+    overflow: hidden;
+    padding: 0 10px;
+    // &: 父选择器
+    &-title {
+      position: relative;
+      margin: 15px 0px 15px 10px;
+      font-size: 15px;
+      .more {
+        color: #787d82;
+        position: absolute;
+        right: 0;
+        font-size: 14px;
+        font-weight: normal;
+      }
+    }
+
+    &-content {
+      img {
+        width: 70px;
+      }
+      .am-flexbox {
+        background-color: transparent;
+        margin-bottom: 8px;
+        text-align: center;
+        .am-grid-item {
+          background-color: #fff;
+          &:nth-child(odd) {
+            margin-right: 8px;
+          }
+        }
+        .am-grid-item-content {
+          padding: 5px 0;
+        }
+        .desc p.title {
+          font-weight: 700;
+          margin-bottom: 5px;
+        }
+        .desc span.info {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+    }
+  }
+
+  .message {
+    background-color: #fff;
+    overflow: hidden;
+    padding: 0 15px;
+    &-title {
+      position: relative;
+      margin: 15px 0px;
+      font-size: 18px;
+    }
+    .news-item {
+      height: 120px;
+      padding: 10px 10px 10px 0;
+      border-bottom: 1px solid #ccc;
+      .imgwrap {
+        float: left;
+        height: 100px;
+        width: 100px;
+        img {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+      .content {
+        overflow: hidden;
+        height: 100%;
+        padding-left: 12px;
+        .title {
+          margin-bottom: 15px;
+          font-size: 14px;
+        }
+        .info {
+          width: 100%;
+          color: #999;
+        }
+      }
+    }
+  }
+}

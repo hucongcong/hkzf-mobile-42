@@ -3,12 +3,18 @@
   padding: 0;
   list-style: none;
   box-sizing: border-box;
+  // https://www.jianshu.com/p/04bf173826aa
+  touch-action: pan-y;
 }
 
 html,
 body,
 #root {
   height: 100%;
+}
+
+a {
+  color: #333;
 }
 
 body {
