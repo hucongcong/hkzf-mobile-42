@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Carousel, Flex, Grid } from 'antd-mobile'
 import axios from 'axios'
 import Nav1 from 'assets/images/nav-1.png'
@@ -8,6 +7,7 @@ import Nav3 from 'assets/images/nav-3.png'
 import Nav4 from 'assets/images/nav-4.png'
 import './index.scss'
 import { Link } from 'react-router-dom'
+import { getCurrentCity } from 'utils'
 const navList = [
   { title: '整租', img: Nav1, path: '/home/house' },
   { title: '合租', img: Nav2, path: '/home/house' },
@@ -66,52 +66,16 @@ class Index extends React.Component {
       })
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.getSwipers()
     this.getGroups()
     this.getMessages()
 
-    // 调用百度地图的api，获取当前的城市
-    var myCity = new window.BMap.LocalCity()
-    myCity.get(async result => {
-      // 城市名字
-      const name = result.name
-      // 发送ajax请求，获取城市的详细信息
-      const res = await axios.get('http://localhost:8080/area/info', {
-        params: {
-          name: name
-        }
-      })
-
-      // 第一步：把整个结果存储到本地缓存中
-      // 第二步：显示城市的名字
-      const { status, body } = res.data
-      if (status === 200) {
-        localStorage.setItem('current_city', JSON.stringify(body))
-      }
-      this.setState({
-        cityName: body.label
-      })
+    const city = await getCurrentCity()
+    console.log(city)
+    this.setState({
+      cityName: city.label
     })
-    // 获取地理位置信息
-    // console.log('获取地理位置')
-    // navigator.geolocation.getCurrentPosition(
-    //   function(position) {
-    //     // position代表成功的结果
-    //     // position.coords可以获取到当前用户的地理位置
-    //     // longitude:  121.6081105    经度
-    //     // latitude：  31.037242      纬度
-    //     // accuracy
-
-    //     // {lng: 121.61887341233741, lat: 31.040603951746952}
-    //     console.log('成功了')
-    //     console.log(position)
-    //   },
-    //   function(error) {
-    //     console.log('失败')
-    //     console.log(error)
-    //   }
-    // )
   }
   renderSwiper() {
     // 如果数据还没有加载完成，不渲染
