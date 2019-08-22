@@ -1,0 +1,35 @@
+.house {
+  // position: absolute;
+  // width: 100%;
+  // top: 0;
+  // bottom: 50px;
+  height: 100%;
+  :global {
+    .house-title {
+      background-color: #eee;
+      padding-left: 10px;
+      .house-search {
+        height: 45px;
+        position: static;
+        top: 0;
+        padding-left: 0;
+        .icon-map {
+          font-size: 25px;
+          color: #00ae66;
+        }
+      }
+    }
+    .ReactVirtualized__Grid {
+      padding: 0 10px;
+      padding-bottom: 50px;
+    }
+
+    .tips {
+      padding-top: 10px;
+      p {
+        height: 100%;
+        background-color: #eee;
+      }
+    }
+  }
+}

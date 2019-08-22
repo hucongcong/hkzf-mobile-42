@@ -1,0 +1,42 @@
+.search-box {
+  padding: 0 10px;
+  position: absolute;
+  top: 25px;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+
+  :global {
+    .search-form {
+      flex: 1;
+      margin: 0 10px;
+      padding: 5px;
+      border-radius: 3px;
+      background-color: #fff;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      .location {
+        .icon-arrow {
+          margin-left: 2px;
+          font-size: 12px;
+          color: #7f7f80;
+        }
+      }
+      .search-input {
+        border-left: solid 1px #787d82;
+        margin-left: 5px;
+        .icon-seach {
+          vertical-align: middle;
+          padding: 0 5px;
+        }
+        span {
+          font-size: 12px;
+          color: #787d82;
+        }
+      }
+    }
+    .icon-map {
+      font-size: 28px;
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.house-package {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  background: #fff;
+  :global {
+    .item {
+      margin: 10px 0;
+      width: 20%;
+      line-height: 23px;
+    }
+
+    .active {
+      color: #21b97a;
+    }
+
+    .icon {
+      font-size: 23px;
+    }
+  }
+}

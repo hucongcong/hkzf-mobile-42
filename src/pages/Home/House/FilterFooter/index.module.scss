@@ -1,0 +1,24 @@
+.filter-footer {
+  margin-top: 20px;
+  border-top: 1px solid #e9e9e9;
+  :global {
+    .btn {
+      display: inline-block;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      font-size: 18px;
+      &.cancel {
+        flex: 1;
+        border-radius: 0;
+        color: #21b97a;
+      }
+      &.ok {
+        border-radius: 0;
+        flex: 2;
+        color: #fff;
+        background-color: #21b97a;
+      }
+    }
+  }
+}

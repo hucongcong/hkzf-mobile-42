@@ -1,0 +1,25 @@
+.rent {
+  :global {
+    .navHeader {
+      position: static;
+    }
+    .houses {
+      padding: 0 10px;
+      background-color: #fff;
+    }
+    .empty {
+      padding-top: 100px;
+      text-align: center;
+      color: #666;
+    }
+
+    .emptyImg {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+    .link {
+      color: #33be85;
+    }
+  }
+}

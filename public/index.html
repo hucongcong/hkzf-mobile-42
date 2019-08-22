@@ -27,9 +27,19 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- /api  改成  /getscript -->
     <script
       type="text/javascript"
-      src="http://api.map.baidu.com/api?v=3.0&ak=PR1BQqjPoVfgv4xjCENLLdDzR4sON9OP"
+      src="http://api.map.baidu.com/getscript?v=3.0&ak=PR1BQqjPoVfgv4xjCENLLdDzR4sON9OP"
     ></script>
+    <!-- <script>
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src =
+        'http://api.map.baidu.com/getscript?v=3.0&ak=PR1BQqjPoVfgv4xjCENLLdDzR4sON9OP' +
+        '&t=' +
+        new Date()
+      document.body.append(script)
+    </script> -->
   </body>
 </html>

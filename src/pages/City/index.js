@@ -1,16 +1,24 @@
 import React from 'react'
-import { NavBar } from 'antd-mobile'
-import './index.scss'
-import Axios from 'axios'
-import { getCurrentCity } from 'utils'
+import { Toast } from 'antd-mobile'
+import styles from './index.module.scss'
+import { getCurrentCity, setCity, API } from 'utils'
 import { List, AutoSizer } from 'react-virtualized'
+import NavHeader from 'common/NavHeader'
 const TITLE_HEIGHT = 36
 const CITY_HEIGHT = 50
+// 有房源的城市
+const CITYS = ['北京', '上海', '广州', '深圳']
+
 class City extends React.Component {
-  state = {
-    shortList: [],
-    cityObj: {},
-    currentIndex: 0
+  constructor(props) {
+    super(props)
+    this.state = {
+      shortList: [],
+      cityObj: {},
+      currentIndex: 0
+    }
+    // 创建ref
+    this.listRef = React.createRef()
   }
 
   formatData(list) {
@@ -39,16 +47,16 @@ class City extends React.Component {
   }
 
   async getCityList() {
-    const res = await Axios.get('http://localhost:8080/area/city?level=1')
-    const { body } = res.data
+    const res = await API.get('area/city?level=1')
+    const { body } = res
     // 对body进行数据格式的处理
     const { cityObj, shortList } = this.formatData(body)
 
     // 添加热门城市
-    const hotRes = await Axios.get('http://localhost:8080/area/hot')
+    const hotRes = await API.get('area/hot')
 
     shortList.unshift('hot')
-    cityObj.hot = hotRes.data.body
+    cityObj.hot = hotRes.body
 
     // 给shortList 城市简写的数组再添加一个 #
     const city = await getCurrentCity()
@@ -61,8 +69,10 @@ class City extends React.Component {
     })
   }
 
-  componentDidMount() {
-    this.getCityList()
+  async componentDidMount() {
+    await this.getCityList()
+    // 数据加载完成了，就需要测量所有的行，解决跳转到还没有加载的数据的时候计算不准确的bug
+    this.listRef.current.measureAllRows()
   }
 
   formatTitle(title) {
@@ -75,16 +85,40 @@ class City extends React.Component {
     }
   }
 
+  /* 
+    1. 给城市名称项绑定点击事件。  传参
+    2. 判断当前城市是否有房源数据（只有北/上/广/深四个城市有数据）
+    3. 如果有则保存当前城市数据到本地缓存中，并返回上一页。
+    4. 如果没有，给一个提示框
+  */
+
+  selectCity(city) {
+    // console.log(Toast)
+    // console.log(city)
+    // 判断city是否在北上广深
+    if (CITYS.includes(city.label)) {
+      // 存起来
+      setCity(city)
+      this.props.history.go(-1)
+    } else {
+      Toast.info('该城市暂无房源信息', 1, null, false)
+    }
+  }
+
   rowRenderer({ key, index, style }) {
     // 通过下标可以获取首字母
     const letter = this.state.shortList[index]
     // 根据首字母获取到需要渲染的城市列表
     const list = this.state.cityObj[letter]
     return (
-      <div key={key} style={style} className="city-item">
-        <div className="title">{this.formatTitle(letter)}</div>
+      <div key={key} style={style} className={styles['city-item']}>
+        <div className={styles['title']}>{this.formatTitle(letter)}</div>
         {list.map(item => (
-          <div key={item.value} className="name">
+          <div
+            key={item.value}
+            className={styles['name']}
+            onClick={this.selectCity.bind(this, item)}
+          >
             {item.label}
           </div>
         ))}
@@ -103,14 +137,30 @@ class City extends React.Component {
     return TITLE_HEIGHT + list.length * CITY_HEIGHT
   }
 
+  /* 
+    - 给索引列表项绑定点击事件  OK 不 ?
+    - 在点击事件中， 通过 index 获取到当前项索引号。  ok   注册事件时传递了参数
+    - 调用 List 组件的 scrollToRow 方法，让 List 组件滚动到指定行。 先去获取List组件
+    - 设置 List 组件的 `scrollToAlignment` 配置项值为 start，保证被点击行出现在页面顶部。
+  */
+  scrollToRow(index) {
+    // console.log(index)
+    // 调用List组件的一个方法 scrollToRow
+    // console.log(this.listRef)
+    this.listRef.current.scrollToRow(index)
+  }
   renderRightMenu() {
     return (
-      <ul className="city-index">
+      <ul className={styles['city-index']}>
         {this.state.shortList.map((item, index) => (
-          <li key={item} className="city-index-item">
+          <li
+            key={item}
+            className={styles['city-index-item']}
+            onClick={this.scrollToRow.bind(this, index)}
+          >
             <span
               className={
-                index === this.state.currentIndex ? 'index-active' : ''
+                index === this.state.currentIndex ? styles['index-active'] : ''
               }
             >
               {item === 'hot' ? '热' : item.toUpperCase()}
@@ -133,17 +183,12 @@ class City extends React.Component {
     }
   }
   render() {
+    // console.log(this.props)
     return (
-      <div className="city">
+      <div className={styles['city']}>
         {/* 顶部导航栏 */}
-        <NavBar
-          className="navBar"
-          mode="light"
-          icon={<i className="iconfont icon-back" />}
-          onLeftClick={() => this.props.history.go(-1)}
-        >
-          城市列表
-        </NavBar>
+        <NavHeader>城市列表</NavHeader>
+        {/* <NavHeaderWithRuoter>城市列表</NavHeaderWithRuoter> */}
         {/* 城市列表 */}
         {/* 
           List: 长列表组件
@@ -161,12 +206,14 @@ class City extends React.Component {
         <AutoSizer>
           {({ height, width }) => (
             <List
+              ref={this.listRef}
               width={width}
               height={height}
               rowCount={this.state.shortList.length}
               rowHeight={this.caclHeight.bind(this)}
               rowRenderer={this.rowRenderer.bind(this)}
               onRowsRendered={this.onRowsRendered.bind(this)}
+              scrollToAlignment="start"
             />
           )}
         </AutoSizer>

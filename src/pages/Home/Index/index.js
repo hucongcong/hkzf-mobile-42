@@ -1,18 +1,18 @@
 import React from 'react'
 import { Carousel, Flex, Grid } from 'antd-mobile'
-import axios from 'axios'
 import Nav1 from 'assets/images/nav-1.png'
 import Nav2 from 'assets/images/nav-2.png'
 import Nav3 from 'assets/images/nav-3.png'
 import Nav4 from 'assets/images/nav-4.png'
 import './index.scss'
 import { Link } from 'react-router-dom'
-import { getCurrentCity } from 'utils'
+import { getCurrentCity, API, BASE_URL } from 'utils'
+import SearchHeader from 'common/SearchHeader'
 const navList = [
   { title: '整租', img: Nav1, path: '/home/house' },
   { title: '合租', img: Nav2, path: '/home/house' },
   { title: '地图找房', img: Nav3, path: '/map' },
-  { title: '去出租', img: Nav4, path: '/rent' }
+  { title: '去出租', img: Nav4, path: '/rent/add' }
 ]
 
 class Index extends React.Component {
@@ -30,8 +30,8 @@ class Index extends React.Component {
     cityName: '北京'
   }
   async getSwipers() {
-    const res = await axios.get('http://localhost:8080/home/swiper')
-    const { status, body } = res.data
+    const res = await API.get('home/swiper')
+    const { status, body } = res
     if (status === 200) {
       this.setState({
         swipers: body,
@@ -40,12 +40,12 @@ class Index extends React.Component {
     }
   }
   async getGroups() {
-    const res = await axios.get('http://localhost:8080/home/groups', {
+    const res = await API.get('home/groups', {
       params: {
         area: 'AREA|88cff55c-aaa4-e2e0'
       }
     })
-    const { status, body } = res.data
+    const { status, body } = res
     if (status === 200) {
       this.setState({
         groups: body
@@ -54,12 +54,12 @@ class Index extends React.Component {
   }
 
   async getMessages() {
-    const res = await axios.get('http://localhost:8080/home/news', {
+    const res = await API.get('home/news', {
       params: {
         area: 'AREA|88cff55c-aaa4-e2e0'
       }
     })
-    const { status, body } = res.data
+    const { status, body } = res
     if (status === 200) {
       this.setState({
         messages: body
@@ -72,7 +72,7 @@ class Index extends React.Component {
     this.getMessages()
 
     const city = await getCurrentCity()
-    console.log(city)
+    // console.log(city)
     this.setState({
       cityName: city.label
     })
@@ -95,7 +95,7 @@ class Index extends React.Component {
             }}
           >
             <img
-              src={`http://localhost:8080${item.imgSrc}`}
+              src={`${BASE_URL}${item.imgSrc}`}
               alt=""
               style={{ width: '100%', verticalAlign: 'top' }}
               //表示图片加载完成了, 会自动调整图片的高度，而不是写死
@@ -109,33 +109,7 @@ class Index extends React.Component {
       </Carousel>
     )
   }
-  renderSearch() {
-    return (
-      <Flex className="search-box">
-        <Flex className="search-form">
-          <div
-            className="location"
-            onClick={() => this.props.history.push('/city')}
-          >
-            <span className="name">{this.state.cityName}</span>
-            <i className="iconfont icon-arrow"> </i>
-          </div>
-          <div
-            className="search-input"
-            onClick={() => this.props.history.push('/search')}
-          >
-            <i className="iconfont icon-seach" />
-            <span className="text">请输入小区地址</span>
-          </div>
-        </Flex>
-        {/* 地图小图标 */}
-        <i
-          className="iconfont icon-map"
-          onClick={() => this.props.history.push('/map')}
-        />
-      </Flex>
-    )
-  }
+
   renderNav() {
     return (
       <Flex>
@@ -157,11 +131,7 @@ class Index extends React.Component {
         {this.state.messages.map(item => (
           <div key={item.id} className="news-item">
             <div className="imgwrap">
-              <img
-                className="img"
-                src={`http://localhost:8080${item.imgSrc}`}
-                alt=""
-              />
+              <img className="img" src={`${BASE_URL}${item.imgSrc}`} alt="" />
             </div>
             <Flex className="content" direction="column" justify="between">
               <h3 className="title">{item.title}</h3>
@@ -181,7 +151,7 @@ class Index extends React.Component {
         {/* 轮播图 */}
         <div className="swiper" style={{ height: this.state.imgHeight }}>
           {/* 渲染搜索框 */}
-          {this.renderSearch()}
+          <SearchHeader cityName={this.state.cityName} />
           {this.renderSwiper()}
         </div>
         <div className="nav">
@@ -215,7 +185,7 @@ class Index extends React.Component {
                     <p className="title">{item.title}</p>
                     <span className="info">{item.desc}</span>
                   </div>
-                  <img src={`http://localhost:8080${item.imgSrc}`} alt="" />
+                  <img src={`${BASE_URL}${item.imgSrc}`} alt="" />
                 </Flex>
               )}
             />

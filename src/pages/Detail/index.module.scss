@@ -1,0 +1,240 @@
+.detail {
+  position: relative;
+  padding-bottom: 50px;
+  background-color: #f6f5f6;
+  border-bottom: none;
+  :global {
+    .navHeader {
+      position: absolute;
+      z-index: 2;
+      color: rgb(255, 255, 255);
+      background-color: transparent;
+      border-bottom: none;
+      background-color: transparent;
+      .icon-share {
+        font-size: 18px;
+      }
+      .icon-back {
+        color: #fff;
+      }
+      .am-navbar-title {
+        color: #fff;
+        font-size: 16px;
+      }
+    }
+    .slides {
+      height: 252px;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 252px;
+      }
+    }
+    .info {
+      padding: 15px;
+      background: #fff;
+      .infoTitle {
+        font-weight: normal;
+        font-size: 16px;
+        color: #333;
+      }
+      .tags {
+        position: relative;
+        margin: 10px 0;
+        .tag {
+          display: inline-block;
+          font-size: 12px;
+          border-radius: 3px;
+          padding: 4px 5px;
+          margin-right: 5px;
+          line-height: 12px;
+        }
+        .tag1 {
+          color: #39becd;
+          background: #e1f5f8;
+        }
+        .tag2 {
+          color: #3fc28c;
+          background: #e1f5ed;
+        }
+        .tag3 {
+          color: #5aabfd;
+          background: #e6f2ff;
+        }
+      }
+      .infoPrice {
+        border-top: solid 1px #cecece;
+        border-bottom: solid 1px #cecece;
+        margin: 15px 0;
+        padding: 15px 0;
+        .infoPriceItem {
+          text-align: center;
+          color: #999;
+          .month {
+            font-size: 12px;
+            font-weight: normal;
+          }
+          div {
+            height: 26px;
+            line-height: 26px;
+            &:first-child {
+              color: #fa5741;
+              font-size: 18px;
+              font-weight: bolder;
+            }
+          }
+        }
+      }
+      .infoBasic {
+        font-size: 13px;
+        .title {
+          display: inline-block;
+          color: #999;
+          padding-right: 5px;
+          line-height: 26px;
+        }
+      }
+    }
+    .map {
+      margin-top: 10px;
+      background: #fff;
+
+      .mapTitle {
+        margin: 0 3%;
+        line-height: 44px;
+        color: #666;
+        span {
+          color: #333;
+        }
+      }
+      .mapContainer {
+        height: 145px;
+        text-align: center;
+      }
+      .mapArrow {
+        background: url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png)
+          no-repeat;
+        position: absolute;
+        width: 11px;
+        height: 10px;
+        top: 23px;
+        left: 10px;
+        overflow: hidden;
+      }
+    }
+
+    .houseTitle {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 10px;
+      padding: 15px 0;
+      border-bottom: solid 1px #cecece;
+    }
+    .about {
+      margin-bottom: 10px;
+      padding: 0 10px;
+      background: #fff;
+    }
+
+    .set {
+      margin: 10px 0px;
+      padding: 0 10px;
+      line-height: 150%;
+      background: #fff;
+    }
+
+    .titleEmpty {
+      padding: 10px 0;
+    }
+
+    .contact {
+      position: relative;
+    }
+
+    .user {
+      margin-bottom: 10px;
+      display: flex;
+    }
+
+    .user :global(img) {
+      width: 52px;
+      height: 52px;
+      margin: 10px 10px 0 0;
+    }
+
+    .useInfo {
+      padding: 15px 0 0 5px;
+    }
+
+    .userAuth {
+      font-size: 12px;
+      color: #fa5741;
+    }
+
+    .userAuth :global(.icon-auth) {
+      margin-right: 5px;
+    }
+
+    .userMsg {
+      position: absolute;
+      right: 15px;
+      top: 20px;
+      color: #33be85;
+      border: solid 1px #33be85;
+      border-radius: 3px;
+      padding: 3px 15px;
+    }
+
+    .descText {
+      line-height: 1.6;
+      padding: 10px 0;
+      color: #333;
+    }
+
+    .recommend {
+      margin: 10px 0 0 0;
+      padding: 0 15px;
+      background: #fff;
+    }
+
+    .items div:last-child {
+      border-bottom: 0;
+    }
+
+    .fixedBottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      border-top: 1px solid #cecece;
+      text-align: center;
+      font-size: 17px;
+      color: #999;
+      background-color: #fff;
+    }
+
+    .favorite {
+      margin-left: 6px;
+    }
+
+    .favoriteImg {
+      width: 16px;
+    }
+
+    .fixedBottom div:first-child {
+      border-right: solid 1px #e8e8e9;
+    }
+
+    .fixedBottom div:last-child {
+      border-right: solid 1px #e8e8e9;
+      background-color: #21b97a;
+    }
+
+    .telephone {
+      color: #fff;
+    }
+  }
+}
